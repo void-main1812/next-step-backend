@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String      @unique
+  Bookmarks Bookmarks[] 
+}
+
+model Bookmarks {
+  id     String @id @default(cuid()) @map("_id")
+  jobId  String
+  userId String
+  user   User   @relation(fields: [userId], references: [userId], onDelete: Cascade) 
+}
