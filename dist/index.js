@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.prismaClient = void 0;
 var client_1 = require("@prisma/client");
 var express_1 = __importDefault(require("express"));
-var secrets_1 = require("../src/secrets");
+var secrets_1 = require("./secrets");
 var index_route_1 = __importDefault(require("./routes/index.route"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var app = (0, express_1.default)();

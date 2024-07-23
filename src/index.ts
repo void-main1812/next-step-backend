@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express, { Request, Response } from "express";
-import { PORT } from "../src/secrets";
+import { PORT } from "./secrets";
 import rootRouter from "./routes/index.route";
 import bodyParser from "body-parser";
 
