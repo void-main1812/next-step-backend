@@ -10,7 +10,10 @@ datasource db {
 model User {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
   userId    String      @unique
-  Bookmarks Bookmarks[] 
+  skills    String[]
+  location  String
+  jobRole  String
+  Bookmarks Bookmarks[]
 }
 
 model Bookmarks {

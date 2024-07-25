@@ -12,10 +12,31 @@ export const createUser = async (req: Request, res: Response) => {
     return;
   }
 
-  user = await prismaClient.user.create({ data: { userId: userId } });
+  user = await prismaClient.user.create({
+    data: { userId: userId, jobRole: '', skills: [], location: "" },
+  });
 
   res.send(user);
 };
+
+// function to update users in the database from the userId
+export const updateUser = async (req: Request, res: Response) => {
+  const {userId, jobRole, skills, location} = req.body;
+
+  let user = await prismaClient.user.findFirst({ where: { userId: userId } });
+
+  if (!user) {
+    res.status(400).send("User does not exist");
+    return;
+  }
+
+  user = await prismaClient.user.update({
+    where: { userId: userId },
+    data: { jobRole: jobRole, skills: skills, location: location },
+  });
+
+  res.send(user);
+}
 
 // function to delete users from the database from the userId
 export const deleteUser = async (req: Request, res: Response) => {

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.createUser = void 0;
+exports.deleteUser = exports.updateUser = exports.createUser = void 0;
 var index_1 = require("../index");
 // function to create users in the database from the userId
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -52,7 +52,9 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     res.status(400).send("User already exists");
                     return [2 /*return*/];
                 }
-                return [4 /*yield*/, index_1.prismaClient.user.create({ data: { userId: userId } })];
+                return [4 /*yield*/, index_1.prismaClient.user.create({
+                        data: { userId: userId, jobRole: '', skills: [], location: "" },
+                    })];
             case 2:
                 user = _a.sent();
                 res.send(user);
@@ -61,6 +63,32 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.createUser = createUser;
+// function to update users in the database from the userId
+var updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, userId, jobRole, skills, location, user;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, userId = _a.userId, jobRole = _a.jobRole, skills = _a.skills, location = _a.location;
+                return [4 /*yield*/, index_1.prismaClient.user.findFirst({ where: { userId: userId } })];
+            case 1:
+                user = _b.sent();
+                if (!user) {
+                    res.status(400).send("User does not exist");
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, index_1.prismaClient.user.update({
+                        where: { userId: userId },
+                        data: { jobRole: jobRole, skills: skills, location: location },
+                    })];
+            case 2:
+                user = _b.sent();
+                res.send(user);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateUser = updateUser;
 // function to delete users from the database from the userId
 var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var userId, user;
