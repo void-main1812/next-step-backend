@@ -24,7 +24,7 @@ export const createBookmark = async (req: Request, res: Response) => {
 }
 
 export const getAllBookmark = async (req: Request, res: Response) => {
-    const { userId } = req.body;
+    const { userId } = req.params;
 
     let user = await prismaClient.user.findFirst({ where: { userId: userId } });
 
@@ -34,6 +34,11 @@ export const getAllBookmark = async (req: Request, res: Response) => {
     }
 
     const bookmarks = await prismaClient.bookmarks.findMany({ where: { userId: userId } });
+
+    if(bookmarks.length === 0) {
+        res.status(400).send("No bookmarks for this user");
+        return;
+    }
 
     res.send(bookmarks);
 }

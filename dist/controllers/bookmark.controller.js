@@ -72,7 +72,7 @@ var getAllBookmark = function (req, res) { return __awaiter(void 0, void 0, void
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                userId = req.body.userId;
+                userId = req.params.userId;
                 return [4 /*yield*/, index_1.prismaClient.user.findFirst({ where: { userId: userId } })];
             case 1:
                 user = _a.sent();
@@ -83,6 +83,10 @@ var getAllBookmark = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, index_1.prismaClient.bookmarks.findMany({ where: { userId: userId } })];
             case 2:
                 bookmarks = _a.sent();
+                if (bookmarks.length === 0) {
+                    res.status(400).send("No bookmarks for this user");
+                    return [2 /*return*/];
+                }
                 res.send(bookmarks);
                 return [2 /*return*/];
         }
