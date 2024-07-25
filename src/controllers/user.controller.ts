@@ -3,7 +3,7 @@ import { prismaClient } from "../index";
 
 // function to create users in the database from the userId
 export const createUser = async (req: Request, res: Response) => {
-  const { userId } = req.body;
+  const { userId, jobRole, skills, location } = req.body;
 
   let user = await prismaClient.user.findFirst({ where: { userId: userId } });
 
@@ -13,15 +13,33 @@ export const createUser = async (req: Request, res: Response) => {
   }
 
   user = await prismaClient.user.create({
-    data: { userId: userId, jobRole: '', skills: [], location: "" },
+    data: {
+      userId: userId,
+      jobRole: jobRole ? jobRole : "",
+      skills: skills ? skills : [],
+      location: location ? location : "",
+    },
   });
 
   res.send(user);
 };
 
+// function to get users from the database from the userId
+export const getUser = async (req: Request, res: Response) => {
+  const { userId } = req.body;
+
+  let user = await prismaClient.user.findFirst({ where: { userId: userId } });
+
+  if (!user) {
+    res.status(400).send("User does not exist");
+    return;
+  }
+  res.send(user);
+};
+
 // function to update users in the database from the userId
 export const updateUser = async (req: Request, res: Response) => {
-  const {userId, jobRole, skills, location} = req.body;
+  const { userId, jobRole, skills, location } = req.body;
 
   let user = await prismaClient.user.findFirst({ where: { userId: userId } });
 
@@ -36,7 +54,7 @@ export const updateUser = async (req: Request, res: Response) => {
   });
 
   res.send(user);
-}
+};
 
 // function to delete users from the database from the userId
 export const deleteUser = async (req: Request, res: Response) => {
