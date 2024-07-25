@@ -26,7 +26,7 @@ export const createUser = async (req: Request, res: Response) => {
 
 // function to get users from the database from the userId
 export const getUser = async (req: Request, res: Response) => {
-  const { userId } = req.body;
+  const { userId } = req.params;
 
   let user = await prismaClient.user.findFirst({ where: { userId: userId } });
 
