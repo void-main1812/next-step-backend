@@ -58,7 +58,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
 // function to delete users from the database from the userId
 export const deleteUser = async (req: Request, res: Response) => {
-  const { userId } = req.body;
+  const userId = req.body.id;
 
   const user = await prismaClient.user.findFirst({ where: { userId: userId } });
 

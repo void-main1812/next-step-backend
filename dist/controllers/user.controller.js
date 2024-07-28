@@ -120,7 +120,7 @@ var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                userId = req.body.userId;
+                userId = req.body.id;
                 return [4 /*yield*/, index_1.prismaClient.user.findFirst({ where: { userId: userId } })];
             case 1:
                 user = _a.sent();
