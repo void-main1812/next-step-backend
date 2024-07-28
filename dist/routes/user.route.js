@@ -6,5 +6,5 @@ var userRoutes = (0, express_1.Router)();
 userRoutes.post("/create", user_controller_1.createUser);
 userRoutes.get("/get-user/:userId", user_controller_1.getUser);
 userRoutes.put("/update", user_controller_1.updateUser);
-userRoutes.delete("/delete", user_controller_1.deleteUser);
+userRoutes.post("/delete", user_controller_1.deleteUser);
 exports.default = userRoutes;
