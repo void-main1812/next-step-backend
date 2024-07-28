@@ -58,7 +58,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
 // function to delete users from the database from the userId
 export const deleteUser = async (req: Request, res: Response) => {
-  const userId = req.body.id;
+  const userId = req.body;
 
   const user = await prismaClient.user.findFirst({ where: { userId: userId } });
 
@@ -71,3 +71,18 @@ export const deleteUser = async (req: Request, res: Response) => {
 
   res.send("User deleted");
 };
+
+export const deleteUserByClerk = async (req: Request, res: Response) => {
+  const id = req.body.data.id;
+
+  const user = await prismaClient.user.findFirst({ where: { userId: id } });
+
+  if (!user) {
+    res.status(400).send("User does not exist");
+    return;
+  }
+
+  await prismaClient.user.delete({ where: { userId: id } });
+
+  res.send("User deleted");
+}

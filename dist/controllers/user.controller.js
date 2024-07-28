@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.getUser = exports.createUser = void 0;
+exports.deleteUserByClerk = exports.deleteUser = exports.updateUser = exports.getUser = exports.createUser = void 0;
 var index_1 = require("../index");
 // function to create users in the database from the userId
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -120,7 +120,7 @@ var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                userId = req.body.id;
+                userId = req.body;
                 return [4 /*yield*/, index_1.prismaClient.user.findFirst({ where: { userId: userId } })];
             case 1:
                 user = _a.sent();
@@ -137,3 +137,25 @@ var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.deleteUser = deleteUser;
+var deleteUserByClerk = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.body.data.id;
+                return [4 /*yield*/, index_1.prismaClient.user.findFirst({ where: { userId: id } })];
+            case 1:
+                user = _a.sent();
+                if (!user) {
+                    res.status(400).send("User does not exist");
+                    return [2 /*return*/];
+                }
+                return [4 /*yield*/, index_1.prismaClient.user.delete({ where: { userId: id } })];
+            case 2:
+                _a.sent();
+                res.send("User deleted");
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.deleteUserByClerk = deleteUserByClerk;
