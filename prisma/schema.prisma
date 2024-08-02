@@ -12,13 +12,16 @@ model User {
   userId    String      @unique
   skills    String[]
   location  String
-  jobRole  String
+  jobRole   String
   Bookmarks Bookmarks[]
 }
 
 model Bookmarks {
-  id     String @id @default(cuid()) @map("_id")
-  jobId  String
-  userId String
-  user   User   @relation(fields: [userId], references: [userId], onDelete: Cascade) 
+  id            String @id @default(cuid()) @map("_id")
+  jobId         String
+  userId        String
+  user          User   @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  employer_logo String
+  employer_name String
+  job_title     String
 }
